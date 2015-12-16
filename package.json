@@ -9,7 +9,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node init.js"
+    "start": "node chat.js"
   },
   "engines": {
       "node": "0.10.31"
