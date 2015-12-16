@@ -31,7 +31,7 @@ io.on('connection',function(socket){
 	});
 	
 	socket.on('showport',function(){
-		console.log(PORT);
+		console.log('conectado xxx');
 	});
 
 	socket.on('change channel',function(newChannel){
