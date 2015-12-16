@@ -61,6 +61,8 @@
 				$("#msj").val('').focus();
 				return false;
 			});
+			
+			socket.emit('showport');
 
 			$("#channel").change(function(){
 				socket.emit('change channel',$("#channel").val());
