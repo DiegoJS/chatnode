@@ -11,36 +11,40 @@ app.get('/',function(req,res){
 	res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection',function(socket){
-	console.log("usuario id : %s",socket.id);
-
-	var channel = 'channel-a';
-
-	socket.broadcast.emit('message','El usuario '+socket.id+' se ha conectado!','System');
-
-	socket.join(channel);
-
-	socket.on('message',function(msj){
-		//io.emit('message',msj,socket.id);
-		io.sockets.in(channel).emit('message',msj,socket.id); //enviar a todos del canal
-		//socket.broadcast.to(channel).emit('message',msj,socket.id); //enviar a todos del canal menos a mi
-	});
-
-	socket.on('disconnect',function(){
-		console.log("Desconectado : %s",socket.id);
-	});
-	
-	socket.on('showport',function(){
-		console.log('conectado xxx');
-	});
-
-	socket.on('change channel',function(newChannel){
-		socket.leave(channel);
-		socket.join(newChannel);
-		channel = newChannel;
-		socket.emit('change channel',newChannel);
-	});
-
+io.sockets.on('connection', function(socket){
+    socket.on('actualizarEstrellas', function(datos){
+        io.emit('actualizarEstrellas',datos);
+    });
+    socket.on('marcar', function(datos){
+        io.emit('marcar',datos);
+    });
+    socket.on('iniciarPartida', function(datos){
+        io.emit('iniciarPartida',datos);
+    });
+    socket.on('listaTurnos', function(datos){
+        io.emit('listaTurnos',datos);
+    });
+    socket.on("enviaReto",function(datos){
+        io.emit("enviaReto",datos);
+    });
+    socket.on("aceptaReto",function(datos){
+        io.emit("aceptaReto",datos);
+    });
+    socket.on("terminaJuego",function(datos){
+        io.emit("terminaJuego",datos);
+    });
+    socket.on("categoriaItems",function(datos){
+        io.emit("categoriaItems",datos);
+    });
+    socket.on("abandonarPartida",function(datos){
+        io.emit("abandonarPartida",datos);
+    });
+    socket.on("actualizaEstadisticas",function(datos){
+        io.emit("actualizaEstadisticas",datos);
+    });
+    socket.on("turnoPorFinDeTiempo",function(datos){
+        io.emit("turnoPorFinDeTiempo",datos);
+    });
 });
 
 http.listen(PORT,function(){
