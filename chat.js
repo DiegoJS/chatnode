@@ -4,7 +4,6 @@ var io = require('socket.io')(http);
 var PORT = process.env.PORT || 8080;
 
 
-console.log(process.env.PORT);
 
 app.get('/',function(req,res){
 	//request : son cabeceras y datos que nos envia el navegador.
@@ -29,6 +28,10 @@ io.on('connection',function(socket){
 
 	socket.on('disconnect',function(){
 		console.log("Desconectado : %s",socket.id);
+	});
+	
+	socket.on('showport',function(){
+		console.log(PORT);
 	});
 
 	socket.on('change channel',function(newChannel){
