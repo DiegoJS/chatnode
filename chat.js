@@ -3,6 +3,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var PORT = process.env.PORT || 8080;
 
+
+console.log(process.env.PORT);
+
 app.get('/',function(req,res){
 	//request : son cabeceras y datos que nos envia el navegador.
 	//response : son todo lo que enviamos desde el servidor.
