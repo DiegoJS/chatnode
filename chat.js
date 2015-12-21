@@ -45,6 +45,9 @@ io.sockets.on('connection', function(socket){
     socket.on("turnoPorFinDeTiempo",function(datos){
         io.emit("turnoPorFinDeTiempo",datos);
     });
+    socket.on("usuarioDisponible",function(datos){
+        io.emit("usuarioDisponible",datos);
+    });
 });
 
 http.listen(PORT,function(){
