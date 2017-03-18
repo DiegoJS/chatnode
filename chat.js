@@ -17,13 +17,13 @@ io.sockets.on('connection', function(socket){
         //saving userId to array with socket ID
         // users[socket.id] = data.userId;
         users.push(data.userId);
-        io.emit('login', users);
+        io.emit('login', users, data.userId);
     });
 
     socket.on('disconnect', function(){
         users.splice(users.indexOf(socket.id), 1);
         console.log('user ' + users[socket.id] + ' disconnected');
-        io.emit('disconnect', users);
+        io.emit('disconnect', users, users.indexOf(socket.id));
     });
 	
 	
