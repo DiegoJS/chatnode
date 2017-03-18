@@ -21,9 +21,10 @@ io.sockets.on('connection', function(socket){
     });
 
     socket.on('disconnect', function(){
+        var userId = users[socket.id];
         users.splice(users.indexOf(socket.id), 1);
         console.log('user ' + users[socket.id] + ' disconnected');
-        io.emit('disconnect', users, users.indexOf(socket.id));
+        io.emit('disconnect', users, userId);
     });
 	
 	
