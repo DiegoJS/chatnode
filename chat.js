@@ -23,11 +23,11 @@ io.sockets.on('connection', function(socket){
     socket.on('disconnect', function(){
         users.splice(users.indexOf(socket.id), 1);
         console.log('user ' + users[socket.id] + ' disconnected');
-        io.emit('disconnect', users, users);
+        io.emit('disconnect', users);
     });
 	
-    socket.on('obtenerUsuarios', function(datos){
-        io.emit('obtenerUsuarios',datos);
+    socket.on('obtenerUsuarios', function(){
+        io.emit('obtenerUsuarios', datos, users);
     });
 	
     socket.on('actualizarEstrellas', function(datos){
