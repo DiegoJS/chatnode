@@ -29,6 +29,10 @@ io.sockets.on('connection', function(socket){
     socket.on('obtenerUsuarios', function(datos){
         io.emit('obtenerUsuarios', datos, users);
     });
+
+    socket.on('testing', function(datos){
+        io.emit('testing', datos, users);
+    });
 	
     socket.on('actualizarEstrellas', function(datos){
         io.emit('actualizarEstrellas',datos);
