@@ -16,16 +16,16 @@ io.sockets.on('connection', function(socket){
         console.log('a user ' + data.userId + ' connected');
         //saving userId to array with socket ID
         // users[socket.id] = data.userId;
+        var users_b = [];
+        users_b = users;
         users.push(data.userId);
-        io.emit('login', users, data.userId);
+        io.emit('login', users, data.userId, users_b);
     });
 
     socket.on('disconnect', function(){
         users.splice(users.indexOf(socket.id), 1);
-        var users_b = [];
-        users_b = users;
         console.log('user ' + users[socket.id] + ' disconnected');
-        io.emit('disconnect', users, users_b);
+        io.emit('disconnect', users);
     });
 	
 	
