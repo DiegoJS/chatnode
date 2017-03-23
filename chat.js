@@ -3,7 +3,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var PORT = process.env.PORT || 8080;
 
-var users = [];
+// var users = [];
+var users = Array();
 
 app.get('/',function(req,res){
 	//request : son cabeceras y datos que nos envia el navegador.
@@ -16,14 +17,14 @@ io.sockets.on('connection', function(socket){
         console.log('a user ' + data.userId + ' connected');
         //saving userId to array with socket ID
         // users[socket.id] = data.userId;
-        var users_b = [];
-        users_b = users;
-        users.push(data.userId);
+        // users.push(data.userId);
+        users[socket.id] = data.userId;
         io.emit('login', users, data.userId, users_b);
     });
 
     socket.on('disconnect', function(){
-        users.splice(users.indexOf(socket.id), 1);
+        // users.splice(users.indexOf(socket.id), 1);
+        users.splice(socket.id, 1);
         console.log('user ' + users[socket.id] + ' disconnected');
         io.emit('disconnect', users);
     });
