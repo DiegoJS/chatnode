@@ -26,8 +26,8 @@ io.sockets.on('connection', function(socket){
         io.emit('disconnect', users);
     });
 	
-    socket.on('obtenerUsuarios', function(){
-        io.emit('obtenerUsuarios', users);
+    socket.on('obtenerUsuarios', function(datos){
+        io.emit('obtenerUsuarios', datos, users);
     });
 	
     socket.on('actualizarEstrellas', function(datos){
