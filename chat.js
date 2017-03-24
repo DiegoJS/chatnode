@@ -3,33 +3,54 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var PORT = process.env.PORT || 8080;
 
-// var users = [];
-var users = Array();
+var users = []
+    ident = [];
 
 app.get('/',function(req,res){
-	//request : son cabeceras y datos que nos envia el navegador.
-	//response : son todo lo que enviamos desde el servidor.
-	res.sendFile(__dirname + '/index.html');
+    //request : son cabeceras y datos que nos envia el navegador.
+    //response : son todo lo que enviamos desde el servidor.
+    res.sendFile(__dirname + '/index.html');
 });
 
 io.sockets.on('connection', function(socket){
     socket.on('login', function(data) {
         console.log('a user ' + data.userId + ' connected');
+        //PRECAUCIÓN
+        // var id = users.indexOf(data.userId);
+        //!PRECAUCIÓN
+        // console.log('a user ' + socket.id + ' connected');
         //saving userId to array with socket ID
-        // users[socket.id] = data.userId;
+        users.push(data.userId);
+        ident.push(socket.id);
         // users.push(data.userId);
-        users[socket.id] = data.userId;
-        io.emit('login', users, data.userId, users_b);
+        io.emit('login', users, data.userId);
     });
 
     socket.on('disconnect', function(){
+        var id = ident.indexOf(socket.id);
+        // console.log('user ' + ident[id] + ' disconnected');
+        console.log(id + ' | user ' + users[id] + ' disconnected');
+
+        if (id >= 0) {
+            users.splice(id, 1);
+            ident.splice(id, 1); 
+        }
+        
         // users.splice(users.indexOf(socket.id), 1);
-        users.splice(socket.id, 1);
-        console.log('user ' + users[socket.id] + ' disconnected');
+
+        // delete users[socket.id];
+
         io.emit('disconnect', users);
     });
-	
-	
+
+    socket.on('conectarVendedor', function(datos){
+        io.emit('conectarVendedor',datos);
+    });
+
+    socket.on('conectarComprador', function(datos){
+        io.emit('conectarComprador',datos);
+    });
+    
     socket.on('actualizarEstrellas', function(datos){
         io.emit('actualizarEstrellas',datos);
     });
@@ -69,5 +90,5 @@ io.sockets.on('connection', function(socket){
 });
 
 http.listen(PORT,function(){
-	console.log('el servidor esta escuchando el puerto %s',PORT);
+    console.log('el servidor esta escuchando el puerto %s',PORT);
 });
