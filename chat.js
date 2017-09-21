@@ -87,6 +87,12 @@ io.sockets.on('connection', function(socket){
     socket.on("usuarioDisponible",function(datos){
         io.emit("usuarioDisponible",datos);
     });
+    
+    /* SOCKET MYHOUSE */
+    socket.on('enviarMensaje', function(datos) {
+       io.emit('mensajeUsuario',datos); 
+    });
+    
 });
 
 http.listen(PORT,function(){
